@@ -51,3 +51,10 @@ nose-progressive
 
 # fix https://github.com/xhtml2pdf/xhtml2pdf/issues/318
 html5lib==1.0b8
+
+
+# Django dbbackup requirements
+python-gnupg
+django-dbbackup
+dropbox
+django-storages

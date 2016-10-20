@@ -71,6 +71,9 @@ INSTALLED_APPS = (
     'zinnia',
     # --
 
+    # Django dbbackup
+    'dbbackup',
+
     'shareholder',
     'services',
     'company',
@@ -317,3 +320,17 @@ try:
     from project.settings.local import *
 except ImportError:
     print "no local conf"
+
+
+# Django dbbackup settings
+DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+# For sending backups to dropbox, one need to create a new dropbox
+# app here https://www.dropbox.com/developers/apps/create and use
+# the oauth2 access token below
+DBBACKUP_STORAGE_OPTIONS = {
+    'oauth2_access_token': 'dropbox-oauth-token',
+}
+# Encryption in dbbackup uses a GPG based key
+# See https://help.github.com/articles/generating-a-new-gpg-key/
+# for generating a new key
+DBBACKUP_GPG_RECIPIENT = 'email or user id of gpg key'
