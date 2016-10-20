@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from kombu import Exchange, Queue
+from celery.schedules import crontab
 
 VERSION = '0.3.53'
 
@@ -303,6 +304,15 @@ CELERY_QUEUES = (
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 BROKER_URL = 'amqp://darg:darg@localhost:5672/darg'
+# Add a periodic task to celery for database
+CELERYBEAT_SCHEDULE = {
+    # Executes every day at midnight
+    'add-every-monday-morning': {
+        'task': 'project.tasks.backup_app_db',
+        'schedule': crontab(minute=0, hour=0),
+        'args': (),
+    },
+}
 
 # --- MARKDOWN X
 

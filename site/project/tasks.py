@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 
 from django.core.mail import EmailMessage
 from django.utils.translation import ugettext as _
+from django.core.management import call_command
 
 # from celery import shared_task
 from project.celery import app
@@ -26,3 +28,11 @@ def send_initial_password_mail(user, password):
     }
     msg.merge_vars = {}
     msg.send()
+
+
+@app.task
+def backup_app_db():
+    """
+    calls django-dbbackup's management commands to backup app's database
+    """
+    call_command('dbbackup', **{'encrypt': True})
