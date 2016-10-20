@@ -8,6 +8,6 @@ touch /tmp/dargprod-master.pid
 
 # Backing up database
 echo "backing up database to dropbox"
-python manage.py dbbackup --encrypt
+./site/manage.py dbbackup --encrypt
 
 echo "...done"
